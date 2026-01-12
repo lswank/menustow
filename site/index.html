@@ -6,7 +6,7 @@
     <title>menustow — fold away menu bar clutter</title>
     <meta
       name="description"
-      content="menustow keeps your macOS menu bar tidy with instant hide/show, smart sections, and a clean stow bar."
+      content="menustow keeps your macOS menu bar tidy with instant hide/show, hidden sections, and a stow bar below the menu."
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -105,7 +105,7 @@
                   </svg>
                 </span>
               </div>
-              <div class="stow-label">Stow menu</div>
+              <div class="stow-label">Stow bar</div>
             </div>
           </div>
           <div class="notch-lab">
@@ -187,11 +187,11 @@
                     </svg>
                   </span>
                 </div>
-                <div class="notch-label">After: overflow lives in a stow menu, and noisy items stay hidden.</div>
+                <div class="notch-label">After: overflow lives in a stow bar, and noisy items stay hidden.</div>
               </div>
             </div>
             <div class="caption">
-              Based on real menustow behavior: move extras into a stow menu or keep them hidden until needed.
+              Based on real menustow behavior: move extras into a stow bar or keep them hidden until needed.
             </div>
           </div>
         </div>
@@ -199,25 +199,25 @@
 
       <section class="story reveal">
         <div class="section-heading">
-          <h2>Designed for the notch, tuned for laptops.</h2>
+          <h2>Made for notches, built for real menu bars.</h2>
           <p>
-            On a laptop, the notch eats space right where menu items want to live.
-            menustow splits the bar into smart zones so your most important
-            icons never disappear behind the cutout.
+            On laptops, the notch steals space from your status items.
+            menustow hides or moves overflow into a stow bar below the menu bar,
+            so your essentials stay visible.
           </p>
         </div>
         <div class="story-grid">
           <article class="reveal">
-            <h3>Notch-aware spacing</h3>
-            <p>Auto-separates items around the notch so labels stay readable.</p>
+            <h3>Stow bar below the menu bar</h3>
+            <p>Overflow items drop into a separate bar beneath the menu bar.</p>
           </article>
           <article class="reveal">
-            <h3>Stow bar fallback</h3>
-            <p>Overflow items tuck into a stow bar that slides out on demand.</p>
+            <h3>Always-hidden section</h3>
+            <p>Keep noisy icons out of sight until you summon them.</p>
           </article>
           <article class="reveal">
-            <h3>Precise hover zones</h3>
-            <p>Trigger reveals where your cursor naturally lands.</p>
+            <h3>Menu item spacing (beta)</h3>
+            <p>Dial in spacing so the bar stays readable without losing items.</p>
           </article>
         </div>
       </section>
@@ -258,7 +258,7 @@
       <section class="behavior reveal">
         <div class="section-heading">
           <h2>macOS-native behavior, without the friction.</h2>
-          <p>Drag, stow, and reveal the way the system already feels familiar.</p>
+          <p>Drag, stow, and reveal the way the menu bar already feels familiar.</p>
         </div>
         <div class="behavior-grid">
           <div class="behavior-card reveal">
@@ -271,15 +271,15 @@
               </div>
               <div class="mini-stow"></div>
             </div>
-            <h3>Command-drag ready</h3>
-            <p>Reorder items instantly using the same gesture macOS already uses.</p>
+            <h3>Drag-and-drop layout editor</h3>
+            <p>Reorder individual items with the built-in layout editor.</p>
           </div>
           <div class="behavior-card reveal">
             <div class="behavior-visual pulse">
               <div class="wave"></div>
             </div>
-            <h3>Hover reveal</h3>
-            <p>Menus glide out when you approach, then rehide when you leave.</p>
+            <h3>Hover, click, or scroll</h3>
+            <p>Show hidden items by hovering, clicking empty space, or scrolling.</p>
           </div>
           <div class="behavior-card reveal">
             <div class="behavior-visual tint">
@@ -287,8 +287,8 @@
               <div class="tint-swatch warm"></div>
               <div class="tint-swatch cool"></div>
             </div>
-            <h3>Theme-aware styling</h3>
-            <p>Match the menu bar tint, border, and shape to your desktop.</p>
+            <h3>Menu bar styling</h3>
+            <p>Adjust tint, border, shadow, and shape to match your desktop.</p>
           </div>
         </div>
       </section>
@@ -394,6 +394,24 @@
           { threshold: 0.2 }
         );
         revealItems.forEach((item) => reveal.observe(item));
+      }
+
+      const timeNodes = document.querySelectorAll(".status-time");
+      if (timeNodes.length > 0) {
+        const formatter = new Intl.DateTimeFormat(undefined, {
+          hour: "numeric",
+          minute: "2-digit",
+        });
+        const updateTime = () => {
+          const now = new Date();
+          const formatted = formatter.format(now);
+          timeNodes.forEach((node) => {
+            node.textContent = formatted;
+          });
+          const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+          window.setTimeout(updateTime, msUntilNextMinute);
+        };
+        updateTime();
       }
     </script>
   </body>
