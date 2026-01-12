@@ -11,6 +11,9 @@ permissions:
 jobs:
   build-sign-notarize:
     runs-on: macos-14
+    env:
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      SIGN_IDENTITY: ${{ secrets.SIGN_IDENTITY }}
 
     steps:
       - name: Checkout
@@ -46,9 +49,6 @@ jobs:
           sudo xcode-select -s "$XCODE_PATH/Contents/Developer"
 
       - name: Archive
-        env:
-          TEAM_ID: ${{ secrets.TEAM_ID }}
-          SIGN_IDENTITY: ${{ secrets.SIGN_IDENTITY }}
         run: task archive
 
       - name: Package (for notarization)
