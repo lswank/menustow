@@ -121,10 +121,11 @@ tasks:
 
   sign:sparkle:
     desc: Re-sign Sparkle helpers with Developer ID + timestamp
-    deps: [archive]
     preconditions:
       - sh: '[ -n "$SIGN_IDENTITY" ]'
         msg: "Set SIGN_IDENTITY in .env for Sparkle re-sign."
+      - sh: '[ -d "{{.APP_PATH}}" ]'
+        msg: "Archive app not found at {{.APP_PATH}}. Run task archive first."
     cmds:
       - |
         SPARKLE_ROOT="{{.APP_PATH}}/Contents/Frameworks/Sparkle.framework/Versions/B"
@@ -139,7 +140,9 @@ tasks:
 
   package:
     desc: Zip the archived app for distribution
-    deps: [sign:sparkle]
+    preconditions:
+      - sh: '[ -d "{{.APP_PATH}}" ]'
+        msg: "Archive app not found at {{.APP_PATH}}. Run task archive first."
     vars:
       VERSION:
         sh: xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -configuration {{.CONFIG}} -showBuildSettings | awk -F ' = ' '/MARKETING_VERSION/ {print $2; exit}'
@@ -215,7 +218,9 @@ tasks:
 
   staple:
     desc: Staple notarization to the app
-    deps: [sign:sparkle]
+    preconditions:
+      - sh: '[ -d "{{.APP_PATH}}" ]'
+        msg: "Archive app not found at {{.APP_PATH}}. Run task archive first."
     cmds:
       - |
         sleep 120

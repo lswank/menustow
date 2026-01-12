@@ -51,6 +51,9 @@ jobs:
       - name: Archive
         run: task archive
 
+      - name: Re-sign Sparkle helpers
+        run: task sign:sparkle
+
       - name: Package (for notarization)
         run: task package
 
