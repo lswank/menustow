@@ -14,6 +14,9 @@
   --halo-glow: rgba(225, 161, 75, 0.2);
   --bar-bg: #fff;
   --bar-border: rgba(28, 26, 23, 0.08);
+  --menu-icon-bg: rgba(28, 26, 23, 0.06);
+  --menu-icon-border: rgba(28, 26, 23, 0.12);
+  --menu-highlight: rgba(255, 255, 255, 0.7);
   --stow-pocket-start: #ffe5c1;
   --stow-pocket-end: #f0c27d;
   --fold-color: rgba(15, 92, 92, 0.35);
@@ -256,74 +259,150 @@ html.js .reveal.is-visible {
   animation: float-in 1.2s ease both;
 }
 
-.bar {
+.macos-demo {
+  display: grid;
+  gap: 16px;
+}
+
+.menu-bar,
+.mini-bar {
   position: relative;
-  height: 70px;
-  border-radius: 40px;
-  background: var(--bar-bg);
-  border: 1px solid var(--bar-border);
   display: flex;
   align-items: center;
-  padding: 0 26px;
+  justify-content: space-between;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 18px;
+  background: var(--bar-bg);
+  border: 1px solid var(--bar-border);
   overflow: hidden;
+  box-shadow: inset 0 1px 0 var(--menu-highlight);
+  backdrop-filter: blur(12px);
 }
 
-.dot {
+.menu-bar::after,
+.mini-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.menu-left,
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+
+.menu-left span {
+  opacity: 0.88;
+}
+
+.menu-left span:first-child {
+  font-weight: 700;
+  opacity: 1;
+}
+
+.menu-right {
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.status-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--menu-icon-bg);
+  border: 1px solid var(--menu-icon-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.status-icon svg {
   width: 16px;
   height: 16px;
-  border-radius: 50%;
-  margin-right: 14px;
-  background: var(--accent-dark);
-  opacity: 0.92;
-  animation: slide-in 3.8s ease-in-out infinite;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.d2 {
-  animation-delay: 0.2s;
+.status-icon .battery-fill {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.9;
 }
 
-.d3 {
-  animation-delay: 0.4s;
-  background: var(--accent);
+.status-time {
+  font-size: 12px;
+  letter-spacing: 0.4px;
 }
 
-.d4 {
-  animation-delay: 0.6s;
+.menu-bar .status-icon,
+.mini-bar .status-icon {
+  background: transparent;
+  border-color: transparent;
 }
 
-.d5 {
-  animation-delay: 0.8s;
-  background: var(--accent-warm);
+.menu-right .status-icon.overflow {
+  animation: stow-hide 6s ease-in-out infinite;
 }
 
-.d6 {
-  animation-delay: 1s;
+.menu-right .status-icon.overflow:nth-child(1) {
+  animation-delay: 0.05s;
 }
 
-.stow-pocket {
-  position: absolute;
-  right: 16px;
-  width: 110px;
-  height: 46px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--stow-pocket-start), var(--stow-pocket-end));
+.menu-right .status-icon.overflow:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.stow-drawer {
   display: grid;
-  place-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--bar-border);
+  background: var(--bar-bg);
+  box-shadow: 0 18px 28px rgba(28, 26, 23, 0.14);
+  justify-self: end;
+  animation: stow-drawer 6s ease-in-out infinite;
 }
 
-.fold {
-  display: block;
-  width: 52px;
-  height: 8px;
-  border-radius: 8px;
-  background: var(--fold-color);
-  position: absolute;
+.stow-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.fold.shadow {
-  transform: translateY(12px);
-  width: 38px;
-  opacity: 0.5;
+.stow-row .status-icon {
+  animation: stow-show 6s ease-in-out infinite;
+}
+
+.stow-row .status-icon:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.stow-row .status-icon:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stow-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
 }
 
 .caption {
@@ -364,15 +443,87 @@ html.js .reveal.is-visible {
 
 .notch-cutout {
   position: absolute;
-  top: -16px;
+  top: -6px;
   left: 50%;
   transform: translateX(-50%);
   width: 160px;
-  height: 48px;
-  border-radius: 0 0 24px 24px;
-  background: var(--bg);
-  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
-  z-index: 2;
+  height: 34px;
+  border-radius: 0 0 18px 18px;
+  background: #0b0b0b;
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.35);
+  z-index: 3;
+}
+
+.menu-bar .notch-cutout {
+  width: 170px;
+}
+
+.mini-bar {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 14px;
+}
+
+.mini-bar .menu-left,
+.mini-bar .menu-right {
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.2px;
+}
+
+.mini-bar .status-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+}
+
+.mini-bar .status-icon svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 1.6;
+}
+
+.mini-bar .status-time {
+  font-size: 10px;
+}
+
+.mini-bar.before .menu-right {
+  transform: translateX(-32px);
+}
+
+.mini-bar.before .menu-right .status-icon {
+  opacity: 0.65;
+}
+
+.mini-bar .notch-cutout {
+  width: 96px;
+  height: 22px;
+  top: -4px;
+  border-radius: 0 0 12px 12px;
+}
+
+.mini-drawer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-left: auto;
+  border-radius: 12px;
+  border: 1px solid var(--bar-border);
+  background: var(--bar-bg);
+  box-shadow: 0 10px 18px rgba(28, 26, 23, 0.12);
+}
+
+.mini-drawer .status-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.mini-drawer .status-icon svg {
+  width: 10px;
+  height: 10px;
 }
 
 .notch-track {
@@ -859,6 +1010,60 @@ html.js .reveal.is-visible {
   }
 }
 
+@keyframes stow-hide {
+  0%,
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  40%,
+  70% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  90%,
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stow-drawer {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  40%,
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@keyframes stow-show {
+  0%,
+  25% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.9);
+  }
+  45%,
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.9);
+  }
+}
+
 @keyframes stow-away {
   0%,
   22% {
@@ -903,6 +1108,9 @@ html.js .reveal.is-visible {
   .steps,
   .cta-panel,
   .notch-track .item,
+  .menu-right .status-icon.overflow,
+  .stow-drawer,
+  .stow-row .status-icon,
   .mini-item,
   .hover-glow,
   .behavior-visual.pulse .wave,
@@ -937,6 +1145,9 @@ html.js .reveal.is-visible {
     --halo-glow: rgba(240, 179, 107, 0.18);
     --bar-bg: #151715;
     --bar-border: rgba(244, 239, 230, 0.12);
+    --menu-icon-bg: rgba(244, 239, 230, 0.08);
+    --menu-icon-border: rgba(244, 239, 230, 0.2);
+    --menu-highlight: rgba(255, 255, 255, 0.08);
     --stow-pocket-start: #3b2f1f;
     --stow-pocket-end: #7b5b30;
     --fold-color: rgba(75, 188, 188, 0.45);
@@ -957,8 +1168,41 @@ html.js .reveal.is-visible {
     flex-wrap: wrap;
   }
 
-  .notch-cutout {
-    width: 120px;
+  .menu-bar {
+    height: 42px;
+    padding: 0 12px;
+  }
+
+  .menu-left,
+  .menu-right {
+    gap: 10px;
+    font-size: 11px;
+  }
+
+  .menu-left span:nth-child(n + 4) {
+    display: none;
+  }
+
+  .status-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .status-icon svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .status-time {
+    font-size: 11px;
+  }
+
+  .menu-bar .notch-cutout {
+    width: 130px;
+  }
+
+  .mini-bar .notch-cutout {
+    width: 80px;
   }
 
   .notch-compare {
