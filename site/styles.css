@@ -270,9 +270,10 @@ html.js .reveal.is-visible {
 
 .menu-bar,
 .mini-bar {
+  --notch-width: clamp(110px, 22vw, 180px);
   position: relative;
   display: grid;
-  grid-template-columns: 1fr minmax(120px, 180px) 1fr;
+  grid-template-columns: 1fr var(--notch-width) 1fr;
   align-items: center;
   height: 46px;
   padding: 0 18px;
@@ -480,14 +481,14 @@ html.js .reveal.is-visible {
 }
 
 .menu-bar .notch-cutout {
-  width: 170px;
+  width: var(--notch-width);
 }
 
 .mini-bar {
   height: 34px;
   padding: 0 12px;
   border-radius: 14px;
-  grid-template-columns: 1fr 90px 1fr;
+  --notch-width: clamp(72px, 18vw, 110px);
 }
 
 .mini-bar .menu-left,
@@ -522,7 +523,7 @@ html.js .reveal.is-visible {
 }
 
 .mini-bar .notch-cutout {
-  width: 96px;
+  width: var(--notch-width);
   height: 22px;
   top: -4px;
   border-radius: 0 0 12px 12px;
@@ -1197,6 +1198,7 @@ html.js .reveal.is-visible {
   .menu-bar {
     height: 42px;
     padding: 0 12px;
+    --notch-width: clamp(88px, 28vw, 130px);
   }
 
   .menu-left,
@@ -1223,14 +1225,6 @@ html.js .reveal.is-visible {
     font-size: 11px;
   }
 
-  .menu-bar .notch-cutout {
-    width: 130px;
-  }
-
-  .mini-bar .notch-cutout {
-    width: 80px;
-  }
-
   .stow-drawer {
     justify-self: center;
   }
@@ -1252,14 +1246,10 @@ html.js .reveal.is-visible {
 
 @media (max-width: 980px) {
   .menu-bar {
-    grid-template-columns: 1fr minmax(100px, 150px) 1fr;
+    --notch-width: clamp(96px, 20vw, 150px);
   }
 
   .menu-left span:nth-child(n + 5) {
     display: none;
-  }
-
-  .menu-bar .notch-cutout {
-    width: 150px;
   }
 }
