@@ -21,7 +21,10 @@
     <div class="bg-halo"></div>
 
     <header class="site-header">
-      <div class="logo">menustow</div>
+      <div class="logo" aria-label="menustow">
+        <span class="logo-menu">menu</span>
+        <span class="logo-stow">stow</span>
+      </div>
       <nav class="nav">
         <a href="https://github.com/lswank/menustow" class="nav-link">GitHub</a>
         <a href="https://github.com/lswank/menustow/releases/latest" class="nav-link">Download</a>
@@ -33,6 +36,10 @@
         <div class="hero-text">
           <p class="eyebrow">macOS 14+</p>
           <h1>Fold away the menu bar chaos.</h1>
+          <div class="wordmark-demo" aria-hidden="true">
+            <span class="wordmark-menu">menu</span>
+            <span class="wordmark-stow">stow</span>
+          </div>
           <p class="lede">
             menustow gives you deliberate control over every menu bar item: hide,
             reveal, search, and stow with a smooth, natural flow.
@@ -58,24 +65,50 @@
             </div>
           </div>
           <div class="notch-lab">
-            <div class="notch-shell">
-              <div class="notch-cutout"></div>
-              <div class="notch-track">
-                <span class="item i1"></span>
-                <span class="item i2"></span>
-                <span class="item i3"></span>
-                <span class="item i4"></span>
-                <span class="item i5"></span>
-                <span class="item i6"></span>
-                <span class="item i7"></span>
+            <div class="notch-compare">
+              <div class="notch-card">
+                <div class="notch-shell before">
+                  <div class="notch-cutout"></div>
+                  <div class="notch-track full">
+                    <span class="item i1"></span>
+                    <span class="item i2"></span>
+                    <span class="item i3"></span>
+                    <span class="item i4"></span>
+                    <span class="item i5"></span>
+                    <span class="item i6"></span>
+                    <span class="item i7"></span>
+                    <span class="item i8"></span>
+                    <span class="item i9"></span>
+                  </div>
+                </div>
+                <div class="notch-label">Before: icons slide under the notch and get clipped.</div>
               </div>
-              <div class="notch-stow">
-                <span class="fold"></span>
-                <span class="fold shadow"></span>
+              <div class="notch-card">
+                <div class="notch-shell after">
+                  <div class="notch-cutout"></div>
+                  <div class="notch-split">
+                    <div class="notch-track left">
+                      <span class="item i1"></span>
+                      <span class="item i2"></span>
+                      <span class="item i3"></span>
+                    </div>
+                    <div class="notch-track right">
+                      <span class="item i4"></span>
+                      <span class="item i5"></span>
+                      <span class="item i6"></span>
+                    </div>
+                  </div>
+                  <div class="notch-stow">
+                    <span class="fold"></span>
+                    <span class="fold shadow"></span>
+                  </div>
+                </div>
+                <div class="notch-label">After: menustow keeps the notch clear and the stow bar reachable.</div>
               </div>
-              <div class="hover-glow"></div>
             </div>
-            <div class="caption">Notch-first layout that keeps icons readable and reachable.</div>
+            <div class="caption">
+              Based on real menustow behavior: items split around the notch instead of hiding behind it.
+            </div>
           </div>
         </div>
       </section>
