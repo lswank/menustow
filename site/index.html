@@ -29,7 +29,7 @@
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero reveal">
         <div class="hero-text">
           <p class="eyebrow">macOS 14+</p>
           <h1>Fold away the menu bar chaos.</h1>
@@ -80,7 +80,7 @@
         </div>
       </section>
 
-      <section class="story">
+      <section class="story reveal">
         <div class="section-heading">
           <h2>Designed for the notch, tuned for laptops.</h2>
           <p>
@@ -90,61 +90,61 @@
           </p>
         </div>
         <div class="story-grid">
-          <article>
+          <article class="reveal">
             <h3>Notch-aware spacing</h3>
             <p>Auto-separates items around the notch so labels stay readable.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Stow bar fallback</h3>
             <p>Overflow items tuck into a stow bar that slides out on demand.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Precise hover zones</h3>
             <p>Trigger reveals where your cursor naturally lands.</p>
           </article>
         </div>
       </section>
 
-      <section class="features">
+      <section class="features reveal">
         <div class="section-heading">
           <h2>Built for the notch, polished for the rest.</h2>
           <p>Powerful controls without turning your menu bar into a puzzle.</p>
         </div>
         <div class="feature-grid">
-          <article>
+          <article class="reveal">
             <h3>Instant hide &amp; reveal</h3>
             <p>Hover, click, or swipe to show what you need, then tuck it away again.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Always-hidden section</h3>
             <p>Keep noisy status items out of sight while staying one gesture away.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Searchable items</h3>
             <p>Find buried items in seconds with a dedicated search panel.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Layout editor</h3>
             <p>Drag-and-drop to arrange icons exactly where you want them.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Menu bar styling</h3>
             <p>Control tint, border, and shape to match your macOS theme.</p>
           </article>
-          <article>
+          <article class="reveal">
             <h3>Smart rehide</h3>
             <p>Automatically hide sections when your cursor leaves the bar.</p>
           </article>
         </div>
       </section>
 
-      <section class="behavior">
+      <section class="behavior reveal">
         <div class="section-heading">
           <h2>macOS-native behavior, without the friction.</h2>
           <p>Drag, stow, and reveal the way the system already feels familiar.</p>
         </div>
         <div class="behavior-grid">
-          <div class="behavior-card">
+          <div class="behavior-card reveal">
             <div class="behavior-visual">
               <div class="mini-track">
                 <span class="mini-item"></span>
@@ -157,14 +157,14 @@
             <h3>Command-drag ready</h3>
             <p>Reorder items instantly using the same gesture macOS already uses.</p>
           </div>
-          <div class="behavior-card">
+          <div class="behavior-card reveal">
             <div class="behavior-visual pulse">
               <div class="wave"></div>
             </div>
             <h3>Hover reveal</h3>
             <p>Menus glide out when you approach, then rehide when you leave.</p>
           </div>
-          <div class="behavior-card">
+          <div class="behavior-card reveal">
             <div class="behavior-visual tint">
               <div class="tint-swatch"></div>
               <div class="tint-swatch warm"></div>
@@ -176,27 +176,27 @@
         </div>
       </section>
 
-      <section class="steps">
+      <section class="steps reveal">
         <div class="section-heading">
           <h2>How it works</h2>
           <p>Three quick moves. A calmer desktop.</p>
         </div>
         <ol class="step-list">
-          <li>
+          <li class="reveal">
             <span class="step-number">01</span>
             <div>
               <h3>Mark what gets stowed</h3>
               <p>Drop cluttered icons into the always-hidden area.</p>
             </div>
           </li>
-          <li>
+          <li class="reveal">
             <span class="step-number">02</span>
             <div>
               <h3>Summon the stow bar</h3>
               <p>Reveal your overflow with a hover, click, or scroll.</p>
             </div>
           </li>
-          <li>
+          <li class="reveal">
             <span class="step-number">03</span>
             <div>
               <h3>Let it fade away</h3>
@@ -206,7 +206,7 @@
         </ol>
       </section>
 
-      <section class="cta-panel">
+      <section class="cta-panel reveal">
         <div>
           <h2>Ready to stow the noise?</h2>
           <p>Download the latest release or contribute to the roadmap.</p>
@@ -229,5 +229,23 @@
         <a href="https://github.com/sponsors/lswank">Sponsor</a>
       </div>
     </footer>
+
+    <script>
+      const revealItems = document.querySelectorAll(".reveal");
+      if (revealItems.length > 0 && "IntersectionObserver" in window) {
+        document.documentElement.classList.add("js");
+        const reveal = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.2 }
+        );
+        revealItems.forEach((item) => reveal.observe(item));
+      }
+    </script>
   </body>
 </html>
