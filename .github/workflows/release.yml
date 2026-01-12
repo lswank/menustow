@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "$ASC_PRIVATE_KEY" > AuthKey.p8
           xcrun notarytool store-credentials "$NOTARY_PROFILE" \
-            --key "$ASC_KEY_ID" \
+            --key-id "$ASC_KEY_ID" \
             --issuer "$ASC_ISSUER_ID" \
             --key "AuthKey.p8"
 
