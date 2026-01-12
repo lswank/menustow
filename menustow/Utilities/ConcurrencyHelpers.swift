@@ -30,7 +30,7 @@ extension Task {
     ///   - operation: The operation to perform.
     ///
     /// - Returns: The result of the operation, if successful.
-    private static func withTimeout<C: Clock>(
+    fileprivate static func runWithTimeout<C: Clock>(
         _ timeout: C.Instant.Duration,
         tolerance: C.Instant.Duration?,
         clock: C,
@@ -78,7 +78,7 @@ extension Task where Failure == any Error {
         operation: sending @escaping @isolated(any) () async throws -> Success
     ) {
         self.init(name: name, priority: priority) {
-            try await Task.withTimeout(timeout, tolerance: tolerance, clock: clock, operation: operation)
+            try await Task.runWithTimeout(timeout, tolerance: tolerance, clock: clock, operation: operation)
         }
     }
 
@@ -107,7 +107,7 @@ extension Task where Failure == any Error {
         operation: sending @escaping @isolated(any) () async throws -> Success
     ) -> Task<Success, Failure> {
         detached(name: name, priority: priority) {
-            try await withTimeout(timeout, tolerance: tolerance, clock: clock, operation: operation)
+            try await runWithTimeout(timeout, tolerance: tolerance, clock: clock, operation: operation)
         }
     }
 }

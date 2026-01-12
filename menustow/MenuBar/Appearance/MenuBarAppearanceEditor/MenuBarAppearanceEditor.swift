@@ -20,16 +20,9 @@ struct MenuBarAppearanceEditor: View {
     let location: Location
 
     var body: some View {
-        if #available(macOS 26.0, *) {
+        VStack(spacing: 0) {
             bodyContent
-                .safeAreaBar(edge: .bottom, spacing: 0) {
-                    bottomBar
-                }
-        } else {
-            VStack(spacing: 0) {
-                bodyContent
-                bottomBar
-            }
+            bottomBar
         }
     }
 
@@ -37,9 +30,6 @@ struct MenuBarAppearanceEditor: View {
     private var bodyContent: some View {
         if appState.menuBarManager.isMenuBarHiddenBySystemUserDefaults {
             cannotEdit
-        } else if #available(macOS 26.0, *) {
-            mainForm
-                .scrollEdgeEffectStyle(.hard, for: .vertical)
         } else {
             mainForm
         }

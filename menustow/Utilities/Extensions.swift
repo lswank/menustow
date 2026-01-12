@@ -102,7 +102,7 @@ extension CGImage {
                 bitsPerComponent: 8,
                 bytesPerRow: width * 4,
                 space: colorSpace,
-                bitmapInfo: CGBitmapInfo(alpha: .premultipliedFirst, byteOrder: .order32Little)
+                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
             ) else {
                 return nil
             }
@@ -205,7 +205,7 @@ extension CGImage {
                     bitsPerComponent: 8,
                     bytesPerRow: 0,
                     space: CGColorSpaceCreateDeviceGray(),
-                    bitmapInfo: CGBitmapInfo(alpha: .alphaOnly)
+                    bitmapInfo: CGImageAlphaInfo.alphaOnly.rawValue
                 ),
                 let data = cgContext.data,
                 let zeroByteBlock = calloc(image.width, MemoryLayout<UInt8>.size)

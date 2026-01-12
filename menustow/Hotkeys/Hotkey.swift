@@ -110,7 +110,8 @@ extension Hotkey {
 }
 
 // MARK: Hotkey: Equatable
-extension Hotkey: @MainActor Equatable {
+@MainActor
+extension Hotkey: Equatable {
     static func == (lhs: Hotkey, rhs: Hotkey) -> Bool {
         lhs.keyCombination == rhs.keyCombination &&
         lhs.action == rhs.action
@@ -118,7 +119,8 @@ extension Hotkey: @MainActor Equatable {
 }
 
 // MARK: Hotkey: Hashable
-extension Hotkey: @MainActor Hashable {
+@MainActor
+extension Hotkey: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(keyCombination)
         hasher.combine(action)
