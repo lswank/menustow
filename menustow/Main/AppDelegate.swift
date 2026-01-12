@@ -31,6 +31,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // to make menu bar item movement less jarring.
         Bridging.setConnectionProperty(true, forKey: "SetsCursorInBackground")
 
+        if handleScreenshotModeIfNeeded() {
+            return
+        }
+
         #if DEBUG
         // Don't perform setup if running as a preview.
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
@@ -51,6 +55,43 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             appState.permissions.logger.debug("Failed required permissions checks")
             appState.performSetup(hasPermissions: false)
         }
+    }
+
+    private func handleScreenshotModeIfNeeded() -> Bool {
+        guard ProcessInfo.processInfo.environment["MENUSTOW_SCREENSHOT_MODE"] == "1" else {
+            return false
+        }
+
+        let scenario = ProcessInfo.processInfo.environment["MENUSTOW_SCREENSHOT_SCENARIO"] ?? "menuBarLayout"
+
+        appState.performSetup(hasPermissions: true)
+
+        switch scenario {
+        case "menuBarAppearance":
+            appState.navigationState.settingsNavigationIdentifier = .menuBarAppearance
+        case "generalSpacing":
+            appState.navigationState.settingsNavigationIdentifier = .general
+        case "hotkeys":
+            appState.navigationState.settingsNavigationIdentifier = .hotkeys
+        case "advanced":
+            appState.navigationState.settingsNavigationIdentifier = .advanced
+        case "about":
+            appState.navigationState.settingsNavigationIdentifier = .about
+        default:
+            appState.navigationState.settingsNavigationIdentifier = .menuBarLayout
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [appState] in
+            if scenario == "search" {
+                appState.activate(withPolicy: .regular)
+                appState.menuBarManager.searchPanel.show()
+            } else {
+                appState.activate(withPolicy: .regular)
+                appState.openWindow(.settings)
+            }
+        }
+
+        return true
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {

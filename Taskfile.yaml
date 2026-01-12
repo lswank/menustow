@@ -12,6 +12,7 @@ vars:
   DIST_DIR: dist
   APP_PATH: "{{.ARCHIVE_PATH}}/Products/Applications/menustow.app"
   RUN_APP: "{{.BUILD_DIR}}/DerivedData/Build/Products/{{.CONFIG}}/menustow.app"
+  SCREENSHOT_DIR: docs/screenshots
   APPCAST_PATH: site/appcast.xml
   SPARKLE_KEY: .sparkle_private_key
   BUNDLE_ID: com.lswank.menustow
@@ -63,6 +64,12 @@ tasks:
     desc: Run SwiftLint
     cmds:
       - swiftlint --config .swiftlint.yml
+
+  screenshots:
+    desc: Generate UI screenshots into docs/screenshots
+    cmds:
+      - mkdir -p {{.SCREENSHOT_DIR}}
+      - SCREENSHOT_DIR="{{.SCREENSHOT_DIR}}" xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -derivedDataPath {{.DERIVED_DATA}} -destination 'platform=macOS' -only-testing:menustowUITests test
 
   build:
     desc: Build without code signing (local dev)

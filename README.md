@@ -96,6 +96,8 @@ menustow uses a number of system APIs that are available starting in macOS 14. A
 
 ## Gallery
 
+Screenshots are generated via `task screenshots` into `docs/screenshots/`.
+
 #### Show hidden menu bar items below the menu bar
 
 _Screenshots needed. These were pre-fork images and are now stale. PRs with updated screenshots are welcome!_

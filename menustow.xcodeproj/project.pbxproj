@@ -14,6 +14,7 @@
 		7127A9FF2C4886D100D99DEF /* IfritStatic in Frameworks */ = {isa = PBXBuildFile; productRef = 7127A9FE2C4886D100D99DEF /* IfritStatic */; };
 		7168EE532E281CBC00FF9830 /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7168EE522E281CBC00FF9830 /* AXSwift */; };
 		7188A68C2E27F9ED008F131D /* MenuBarItemService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 7188A6832E27F9ED008F131D /* MenuBarItemService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		700B3E84B8B54B27AF41AEDA /* menustowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF0F05F10B04EF6A9E19A74 /* menustowUITests.swift */; };
 		71A065092E680C620087DB38 /* Semaphore in Frameworks */ = {isa = PBXBuildFile; productRef = 71A065082E680C620087DB38 /* Semaphore */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7188A6822E27F9ED008F131D;
 			remoteInfo = MenuBarItemService;
+		};
+		BFB6B76398A544BEB8942E5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 716683222A767E6A006ABF84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 716683292A767E6A006ABF84;
+			remoteInfo = menustow;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -42,6 +50,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		223F08B6CD7E4561B94C4D15 /* menustowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = menustowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DF0F05F10B04EF6A9E19A74 /* menustowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menustowUITests.swift; sourceTree = "<group>"; };
+		522A0448BFC340B69E4C740F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7166832A2A767E6A006ABF84 /* menustow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = menustow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7188A6832E27F9ED008F131D /* MenuBarItemService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = MenuBarItemService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -91,6 +102,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F63590D88E954D1BA2219933 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -99,6 +117,7 @@
 			children = (
 				7188A69E2E280BB4008F131D /* Shared */,
 				71BDFBE12C978E2A00EF145F /* menustow */,
+				35B13516C29E4095AE7C45CE /* menustowUITests */,
 				7188A6842E27F9ED008F131D /* MenuBarItemService */,
 				7166832B2A767E6A006ABF84 /* Products */,
 			);
@@ -109,8 +128,18 @@
 			children = (
 				7166832A2A767E6A006ABF84 /* menustow.app */,
 				7188A6832E27F9ED008F131D /* MenuBarItemService.xpc */,
+				223F08B6CD7E4561B94C4D15 /* menustowUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		35B13516C29E4095AE7C45CE /* menustowUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5DF0F05F10B04EF6A9E19A74 /* menustowUITests.swift */,
+				522A0448BFC340B69E4C740F /* Info.plist */,
+			);
+			path = menustowUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +201,24 @@
 			productReference = 7188A6832E27F9ED008F131D /* MenuBarItemService.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
+		A24A299CA3564CE1B8F90019 /* menustowUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 637A9C897F7747E394B70E3A /* Build configuration list for PBXNativeTarget "menustowUITests" */;
+			buildPhases = (
+				FD6B8E9293404FFEA3A8AAA8 /* Sources */,
+				F63590D88E954D1BA2219933 /* Frameworks */,
+				91717ACB85CB4E608A7F5B57 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4FB61A1D8B4D4129AC4471C0 /* PBXTargetDependency */,
+			);
+			name = menustowUITests;
+			productName = menustowUITests;
+			productReference = 223F08B6CD7E4561B94C4D15 /* menustowUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -187,6 +234,10 @@
 					};
 					7188A6822E27F9ED008F131D = {
 						CreatedOnToolsVersion = 26.0;
+					};
+					A24A299CA3564CE1B8F90019 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = 716683292A767E6A006ABF84;
 					};
 				};
 			};
@@ -213,6 +264,7 @@
 			targets = (
 				716683292A767E6A006ABF84 /* menustow */,
 				7188A6822E27F9ED008F131D /* MenuBarItemService */,
+				A24A299CA3564CE1B8F90019 /* menustowUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -226,6 +278,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7188A6812E27F9ED008F131D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91717ACB85CB4E608A7F5B57 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -264,13 +323,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7188A67F2E27F9ED008F131D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+	7188A67F2E27F9ED008F131D /* Sources */ = {
+		isa = PBXSourcesBuildPhase;
+		buildActionMask = 2147483647;
+		files = (
+		);
+		runOnlyForDeploymentPostprocessing = 0;
+	};
+	FD6B8E9293404FFEA3A8AAA8 /* Sources */ = {
+		isa = PBXSourcesBuildPhase;
+		buildActionMask = 2147483647;
+		files = (
+			700B3E84B8B54B27AF41AEDA /* menustowUITests.swift in Sources */,
+		);
+		runOnlyForDeploymentPostprocessing = 0;
+	};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -278,6 +345,11 @@
 			isa = PBXTargetDependency;
 			target = 7188A6822E27F9ED008F131D /* MenuBarItemService */;
 			targetProxy = 7188A68A2E27F9ED008F131D /* PBXContainerItemProxy */;
+		};
+		4FB61A1D8B4D4129AC4471C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 716683292A767E6A006ABF84 /* menustow */;
+			targetProxy = BFB6B76398A544BEB8942E5D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -524,6 +596,36 @@
 			};
 			name = Release;
 		};
+		5660484E53B64770B2FADED9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = menustowUITests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lswank.menustowUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = menustow;
+			};
+			name = Debug;
+		};
+		3FEEC553A27748D9B9DF0C91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = menustowUITests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lswank.menustowUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = menustow;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -550,6 +652,15 @@
 			buildConfigurations = (
 				7188A68E2E27F9ED008F131D /* Debug */,
 				7188A68F2E27F9ED008F131D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		637A9C897F7747E394B70E3A /* Build configuration list for PBXNativeTarget "menustowUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5660484E53B64770B2FADED9 /* Debug */,
+				3FEEC553A27748D9B9DF0C91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

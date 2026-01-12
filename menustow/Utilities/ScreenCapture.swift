@@ -37,6 +37,9 @@ enum ScreenCapture {
     /// calls. Pass `true` to the `reset` parameter to replace the cached
     /// result with a newly computed value.
     static func cachedCheckPermissions(reset: Bool = false) -> Bool {
+        if ProcessInfo.processInfo.environment["MENUSTOW_SCREENSHOT_MODE"] == "1" {
+            return true
+        }
         enum Context {
             static var cachedResult: Bool?
         }
