@@ -144,14 +144,54 @@ tasks:
     cmds:
       - |
         if [ -n "$NOTARY_PROFILE" ]; then
-          xcrun notarytool submit "{{.ZIP_PATH}}" --keychain-profile "$NOTARY_PROFILE" --wait
+          OUTPUT="$(xcrun notarytool submit "{{.ZIP_PATH}}" --keychain-profile "$NOTARY_PROFILE" --wait --output-format json)"
+          export OUTPUT
+          echo "$OUTPUT"
+          STATUS="$(python3 - <<'PY'
+        import json, os, sys
+        data = json.loads(os.environ["OUTPUT"])
+        print(data.get("status", ""))
+        PY
+          )"
+          if [ "$STATUS" != "Accepted" ]; then
+            ID="$(python3 - <<'PY'
+        import json, os, sys
+        data = json.loads(os.environ["OUTPUT"])
+        print(data.get("id", ""))
+        PY
+            )"
+            if [ -n "$ID" ]; then
+              xcrun notarytool log "$ID" --keychain-profile "$NOTARY_PROFILE" || true
+            fi
+            exit 1
+          fi
           exit 0
         fi
         if [ -z "$NOTARY_KEY_ID" ] || [ -z "$NOTARY_ISSUER_ID" ] || [ -z "$NOTARY_KEY_PATH" ]; then
           echo "Set NOTARY_PROFILE or NOTARY_KEY_ID/NOTARY_ISSUER_ID/NOTARY_KEY_PATH for notarization."
           exit 1
         fi
-        xcrun notarytool submit "{{.ZIP_PATH}}" --key "$NOTARY_KEY_PATH" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID" --wait
+        OUTPUT="$(xcrun notarytool submit "{{.ZIP_PATH}}" --key "$NOTARY_KEY_PATH" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID" --wait --output-format json)"
+        export OUTPUT
+        echo "$OUTPUT"
+        STATUS="$(python3 - <<'PY'
+        import json, os, sys
+        data = json.loads(os.environ["OUTPUT"])
+        print(data.get("status", ""))
+        PY
+        )"
+        if [ "$STATUS" != "Accepted" ]; then
+          ID="$(python3 - <<'PY'
+        import json, os, sys
+        data = json.loads(os.environ["OUTPUT"])
+        print(data.get("id", ""))
+        PY
+          )"
+          if [ -n "$ID" ]; then
+            xcrun notarytool log "$ID" --key "$NOTARY_KEY_PATH" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID" || true
+          fi
+          exit 1
+        fi
 
   staple:
     desc: Staple notarization to the app
