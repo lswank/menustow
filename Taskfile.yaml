@@ -90,6 +90,7 @@ tasks:
         if [ -n "$SIGN_IDENTITY" ]; then
           SIGNING_ARGS+=("CODE_SIGN_STYLE=Manual")
           SIGNING_ARGS+=("CODE_SIGN_IDENTITY=$SIGN_IDENTITY")
+          SIGNING_ARGS+=("OTHER_CODE_SIGN_FLAGS=--timestamp")
         fi
         xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -configuration {{.CONFIG}} -derivedDataPath {{.DERIVED_DATA}} build "${SIGNING_ARGS[@]}"
 
@@ -109,6 +110,7 @@ tasks:
         if [ -n "$SIGN_IDENTITY" ]; then
           SIGNING_ARGS+=("CODE_SIGN_STYLE=Manual")
           SIGNING_ARGS+=("CODE_SIGN_IDENTITY=$SIGN_IDENTITY")
+          SIGNING_ARGS+=("OTHER_CODE_SIGN_FLAGS=--timestamp")
         fi
         xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -configuration {{.CONFIG}} -archivePath {{.ARCHIVE_PATH}} archive "${SIGNING_ARGS[@]}"
 
@@ -117,9 +119,27 @@ tasks:
     cmds:
       - xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -configuration {{.CONFIG}} -archivePath {{.ARCHIVE_PATH}} archive CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
+  sign:sparkle:
+    desc: Re-sign Sparkle helpers with Developer ID + timestamp
+    deps: [archive]
+    preconditions:
+      - sh: '[ -n "$SIGN_IDENTITY" ]'
+        msg: "Set SIGN_IDENTITY in .env for Sparkle re-sign."
+    cmds:
+      - |
+        SPARKLE_ROOT="{{.APP_PATH}}/Contents/Frameworks/Sparkle.framework/Versions/B"
+        if [ -d "$SPARKLE_ROOT" ]; then
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "$SPARKLE_ROOT/XPCServices/Downloader.xpc"
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "$SPARKLE_ROOT/XPCServices/Installer.xpc"
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "$SPARKLE_ROOT/Updater.app"
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "$SPARKLE_ROOT/Autoupdate"
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "$SPARKLE_ROOT"
+          /usr/bin/codesign --force --timestamp --options runtime --sign "$SIGN_IDENTITY" "{{.APP_PATH}}"
+        fi
+
   package:
     desc: Zip the archived app for distribution
-    deps: [archive]
+    deps: [sign:sparkle]
     vars:
       VERSION:
         sh: xcodebuild -project {{.PROJECT}} -scheme {{.SCHEME}} -configuration {{.CONFIG}} -showBuildSettings | awk -F ' = ' '/MARKETING_VERSION/ {print $2; exit}'
@@ -195,7 +215,7 @@ tasks:
 
   staple:
     desc: Staple notarization to the app
-    deps: [archive]
+    deps: [sign:sparkle]
     cmds:
       - xcrun stapler staple "{{.APP_PATH}}"
 
