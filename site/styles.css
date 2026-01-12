@@ -515,7 +515,8 @@ html.js .reveal.is-visible {
 }
 
 .mini-bar.before .menu-right {
-  transform: translateX(-32px);
+  gap: 6px;
+  transform: translateX(-52px);
 }
 
 .mini-bar.before .menu-right .status-icon {
@@ -1235,6 +1236,21 @@ html.js .reveal.is-visible {
 
   .notch-split {
     gap: 110px;
+  }
+}
+
+@media (max-width: 1800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-text {
+    max-width: 720px;
+  }
+
+  .hero-visual {
+    max-width: 980px;
+    justify-self: stretch;
   }
 }
 
