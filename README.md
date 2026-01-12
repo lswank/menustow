@@ -42,7 +42,7 @@ brew install --cask menustow
 
 ## Website
 
-The marketing site lives in `site/`. Deploy it on Vercel with the root directory set to `site`.
+The homepage lives in `site/`.
 
 ## Features/Roadmap
 
