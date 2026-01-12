@@ -217,7 +217,15 @@ tasks:
     desc: Staple notarization to the app
     deps: [sign:sparkle]
     cmds:
-      - xcrun stapler staple "{{.APP_PATH}}"
+      - |
+        for attempt in 1 2 3 4 5; do
+          if xcrun stapler staple "{{.APP_PATH}}"; then
+            exit 0
+          fi
+          echo "Staple attempt $attempt failed; retrying in 20s..."
+          sleep 20
+        done
+        exit 1
 
   sparkle:appcast:
     desc: Generate appcast.xml for Sparkle (requires generate_appcast)
